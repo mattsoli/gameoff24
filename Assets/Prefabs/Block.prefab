@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 342926101351297632}
   - component: {fileID: 2384215026153945224}
   - component: {fileID: 3481885735020200760}
+  - component: {fileID: 5605434524537181033}
   - component: {fileID: 3814095407373964900}
   m_Layer: 6
   m_Name: Block
@@ -106,6 +107,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5605434524537181033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4366556525967430210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137063cec00f7b74b90e832940ac9876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockType: 0
+  _meshRenderer: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: 1c846aa2e7f062041b2d5118cb16f7ca, type: 2}
+  - {fileID: 2100000, guid: a2fb62fe02ec0cb4abd68fd8a42c0402, type: 2}
+  - {fileID: 2100000, guid: a958492c0e15949438bf41bfa9cf4bbc, type: 2}
+  - {fileID: 2100000, guid: fa814808afc3ac149a51194b67d75130, type: 2}
 --- !u!114 &3814095407373964900
 MonoBehaviour:
   m_ObjectHideFlags: 0
