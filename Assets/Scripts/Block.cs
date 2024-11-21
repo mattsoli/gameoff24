@@ -30,11 +30,9 @@ public class Block : MonoBehaviour
                 break;
             case 1:
                 _meshRenderer.material = materials[1];
-                _hits = 1;
                 break;
             case 2:
                 _meshRenderer.material = materials[2];
-                _hits = 2;
                 break;
             default:
                 break;
@@ -43,6 +41,7 @@ public class Block : MonoBehaviour
     
     public void DealDamage(int damage)
     {
-        _hits -= damage;
+        _hits -= math.clamp(damage, 0, _hits);
+        UpdateBlock();
     }
 }

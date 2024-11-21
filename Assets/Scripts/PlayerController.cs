@@ -10,20 +10,24 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Creazione del raggio dalla posizione del mouse
-            RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit)) // Se il raggio colpisce un oggetto
+            if (Physics.Raycast(ray, out RaycastHit hit)) // Se il raggio colpisce un oggetto
             {
                 GameObject clickedObject = hit.collider.gameObject; // Ottieni l'oggetto cliccato
-                Debug.Log(clickedObject);
-                // Controlla se l'oggetto ha il tag "Blocco"
-                if (TryGetComponent(out Block block))
+
+                if (clickedObject.TryGetComponent(out BlockChecker blockChecker))
                 {
-                    block.DealDamage(1);
-                    // Azione da eseguire se è un blocco
-                    Debug.Log($"Hai cliccato su un blocco: {clickedObject.name}");
-                    // Esegui altre operazioni qui
+                    var neighbours = blockChecker.CheckSurroundings();
+
+                    foreach (var neighbour in neighbours)
+                    {
+                        if (neighbour.TryGetComponent(out Block block))
+                        {
+                            block.DealDamage(1);
+                        }
+                    }
                 }
+              
             }
         }
     }
