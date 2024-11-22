@@ -24,6 +24,7 @@ public class PlayerController : MonoSingleton<PlayerController>
 
                         foreach (var neighbour in neighbours)
                         {
+                            Debug.Log(neighbour);
                             if (neighbour.TryGetComponent(out Block block))
                             {
                                 block.DealDamage(1);
