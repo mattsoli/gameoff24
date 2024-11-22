@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoSingleton<PlayerController>
 {
+    public int currentWeapon = 0;
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -17,17 +18,26 @@ public class PlayerController : MonoBehaviour
 
                 if (clickedObject.TryGetComponent(out BlockChecker blockChecker))
                 {
-                    var neighbours = blockChecker.CheckSurroundings();
-
-                    foreach (var neighbour in neighbours)
+                    if (currentWeapon == 1)
                     {
-                        if (neighbour.TryGetComponent(out Block block))
+                        var neighbours = blockChecker.CheckSurroundings();
+
+                        foreach (var neighbour in neighbours)
                         {
-                            block.DealDamage(1);
+                            if (neighbour.TryGetComponent(out Block block))
+                            {
+                                block.DealDamage(1);
+                            }
                         }
                     }
+                    else if (currentWeapon == 2)
+                    {
+                        if (blockChecker.TryGetComponent(out Block block))
+                        {
+                            block.DealDamage(2);
+                        }                    
+                    }
                 }
-              
             }
         }
     }
