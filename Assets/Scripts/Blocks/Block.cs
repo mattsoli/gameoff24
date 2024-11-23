@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-
 public class Block : MonoBehaviour
 {
     [SerializeField] private MeshRenderer _meshRenderer;
@@ -21,7 +20,7 @@ public class Block : MonoBehaviour
         UpdateBlock();
     }
 
-    void UpdateBlock()
+    public void UpdateBlock()
     {
         switch (_hits)
         {
@@ -37,6 +36,16 @@ public class Block : MonoBehaviour
             default:
                 break;
         }    
+    }
+
+    public void HighlightBlock(Block block)
+    {
+        block.SetMaterial(materials[4]);
+    }
+
+    private void SetMaterial(Material material)
+    {
+        _meshRenderer.material = material;
     }
     
     public void DealDamage(int damage)
