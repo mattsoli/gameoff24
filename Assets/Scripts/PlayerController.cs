@@ -61,6 +61,7 @@ public class PlayerController : MonoSingleton<PlayerController>
                 block.UpdateBlock();
             }
         }
+        
         // Aggiorna l'elenco dei blocchi evidenziati
         _highlightedBlocks = newHighlightedBlocks;
     }
