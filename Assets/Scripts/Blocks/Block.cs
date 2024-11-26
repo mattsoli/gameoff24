@@ -4,12 +4,24 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
+
+public enum eBlockType
+{
+    BlockLv0,
+    BlockLv1,
+    BlockLv2
+}
+
 public class Block : MonoBehaviour
 {
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private List<Material> materials;
+    [SerializeField] private eBlockType _blockType;
+    public eBlockType BlockType => _blockType;
 
     [SerializeField] int _hits = 0;
+    public int Hits => _hits;
+
     private void Awake()
     {
         _meshRenderer = GetComponent<MeshRenderer>();
@@ -17,20 +29,22 @@ public class Block : MonoBehaviour
 
     private void Start()
     {
-        UpdateBlock();
+        UpdateBlockMaterial();
     }
 
-    public void UpdateBlock()
+    public void UpdateBlockMaterial()
     {
-        switch (_hits)
+        if (!_meshRenderer)
         {
-            case 0:
-                _meshRenderer.material = materials[0];
-                break;
-            case 1:
+            return;
+        }
+        
+        switch (_blockType)
+        {
+            case eBlockType.BlockLv1:
                 _meshRenderer.material = materials[1];
                 break;
-            case 2:
+            case eBlockType.BlockLv2:
                 _meshRenderer.material = materials[2];
                 break;
             default:
@@ -40,7 +54,10 @@ public class Block : MonoBehaviour
 
     public void HighlightBlock(Block block)
     {
-        block.SetMaterial(materials[4]);
+        if (block)
+        {
+            block.SetMaterial(materials[4]);
+        }
     }
 
     private void SetMaterial(Material material)
@@ -51,6 +68,15 @@ public class Block : MonoBehaviour
     public void DealDamage(int damage)
     {
         _hits -= math.clamp(damage, 0, _hits);
-        UpdateBlock();
+
+        if (_hits <= 0)
+        {
+            // Distruggi blocco
+            Destroy(gameObject);
+        }
+        else
+        {
+            UpdateBlockMaterial();
+        }
     }
 }

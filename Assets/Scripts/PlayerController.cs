@@ -30,6 +30,7 @@ public class PlayerController : MonoSingleton<PlayerController>
                         {
                             block.HighlightBlock(block);
                             newHighlightedBlocks.Add(block);
+                            //newHighlightedBlocks.Add(clickedObject.GetComponent<Block>());
 
                             if (Input.GetMouseButtonDown(0))
                             {
@@ -40,25 +41,43 @@ public class PlayerController : MonoSingleton<PlayerController>
                 }
                 else if (currentWeapon == 2) // Pickaxe
                 {
-                    if (blockChecker.TryGetComponent(out Block block))
+                    var neighbours = blockChecker.CheckDepth(1);
+                    
+                    foreach (var neighbour in neighbours)
+                    {
+                        if (neighbour.TryGetComponent(out Block block))
+                        {
+                            block.HighlightBlock(block);
+                            newHighlightedBlocks.Add(block);
+                           
+
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                block.DealDamage(2);
+                            }
+                        }
+                    }
+                    
+                 /*   if (blockChecker.TryGetComponent(out Block block))
                     {
                         block.HighlightBlock(block);
                         newHighlightedBlocks.Add(block);
-
+                        
                         if (Input.GetMouseButtonDown(0))
                         {
                             block.DealDamage(2);
                         }
-                    }
+                    } **/
                 }
             }
         }
+        
         // Rimuovi l'evidenziazione dai blocchi che non sono più colpiti
         foreach (var block in _highlightedBlocks)
         {
             if (!newHighlightedBlocks.Contains(block))
             {
-                block.UpdateBlock();
+                block?.UpdateBlockMaterial();
             }
         }
         
